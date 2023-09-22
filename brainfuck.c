@@ -3,6 +3,19 @@
 #include <string.h>
 #define MAX_SIZE 3000
 
+char stack[512];
+int count = 0;
+
+void push(char x){
+    stack[count] = x;
+    count++;
+}
+char pop(){
+    char res = stack[count - 1]; 
+    count--;
+    return res;
+}
+
 int main(){
     
     // declartions and such
@@ -32,7 +45,6 @@ int main(){
     }
     endOfInstruction = i; 
     
-
     // run through instructions 
     for(int z = 0; z < endOfInstruction; z++){
        // instruction for + 
@@ -70,10 +82,28 @@ int main(){
         scanf("%c", &userInput);
         tape[cellIndex] = userInput; 
        }
+       // instructions for [
+       if(ch[z] == '['){
        
-        //TODO make instructions for [
-        // make use of a stack to check for equal bracket matching**
-        // TODO make instructions for ]
+        // move pointer to instruction AFTER matching ] if data pointer is zero
+        if(tape[cellIndex] == 0){
+            while(ch[z] != ']'){
+                z++; 
+            }
+            //z++;
+        } 
+       }
+        // instructions for ]
+        if(ch[z] == ']'){
+            if (tape[cellIndex] != 0){
+                while(ch[z] != '['){
+                    z--;
+                }
+                //z++;
+            }
+            
+        }
+
        
     
     }
